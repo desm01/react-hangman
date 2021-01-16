@@ -8,6 +8,22 @@ import Char from './components/char'
 
 class App extends Component {
 
+constructor(props) {
+  super(props);
+
+  let randomWords = require('random-words');
+  let word = randomWords();
+
+  let chars = word.split("");
+
+  this.state = {
+    word : word,
+    possibleChars : chars,
+    lives : 4
+  }
+}
+  
+
    state = {
     word : 'null',
     possibleChars : ['n','u','l','l'],
@@ -31,31 +47,19 @@ checkAns = (e) => {
   let possibleAnswers = this.state.possibleChars;
   console.log(possibleAnswers);
   
+  let correct = false;
 
   for (let i = 0; i < possibleAnswers.length; i++) {
     if (possibleAnswers[i] === userAnswer) {
       console.log('correct');
+      correct = true;
     }
   }
-
-  console.log('wrong')
+  
+  if (correct === false) {
+    console.log('wrong')
+  }
 }
-
-componentDidMount() {
-  let randomWords = require('random-words');
-  let word = randomWords();
-
-  let chars = word.split("");
-
-  this.setState({
-    word : word,
-    possibleChars : chars,
-    lives : 4
-  })
-
-}
-
-
 
   render() {
     return (
