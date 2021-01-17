@@ -16,26 +16,35 @@ constructor(props) {
 
   let chars = word.split("");
 
+  let displayedChars = [];
+  console.log(chars);
+
+  for (let i = 0; i < chars.length; i++) {
+    displayedChars.push(' _ ')
+  }
+
   this.state = {
     word : word,
     possibleChars : chars,
+    displayedChars : displayedChars,
     lives : 4
   }
 }
   
 
-   state = {
-    word : 'null',
-    possibleChars : ['n','u','l','l'],
-    lives : 4
+  flex = {
+display : 'flex',
+justifyContent : 'center'
   }
 
     generateChars = () => {
-      let words = this.state.possibleChars;
+        let words = this.state.displayedChars;
 
         return (
-          words.map((char) => (
-            <Char char = {char}  ></Char>
+
+          words.map((char, index) => (
+            
+            <Char char = {char}  correct = {false}></Char>
           ))
         );
   }
@@ -51,8 +60,18 @@ checkAns = (e) => {
 
   for (let i = 0; i < possibleAnswers.length; i++) {
     if (possibleAnswers[i] === userAnswer) {
-      console.log('correct');
+      console.log('correct')
+      let list = this.state.displayedChars;
+      list[i] = userAnswer;
+
+      this.setState ({
+        displayedChars : list
+      })
+
+      console.log(this.state)
+
       correct = true;
+
     }
   }
   
@@ -61,12 +80,17 @@ checkAns = (e) => {
   }
 }
 
+
+
   render() {
     return (
       <div className="App">
         <h1>{this.state.words}</h1>
         <Person></Person>
+       
+       <div style = {this.flex}>
         {this.generateChars()}
+      </div>
         <Input checkAnswer = {this.checkAns} ></Input>
       </div>
     );

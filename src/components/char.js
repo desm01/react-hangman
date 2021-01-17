@@ -1,8 +1,13 @@
 import React from 'react'
 
 function char(props) {
+
+    const style = {
+        padding : '10px'
+    }
+
 return(
-    <div>
+    <div style = {style}>
         <p>{props.char}</p>
     </div>
 
