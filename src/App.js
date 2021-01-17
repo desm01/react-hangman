@@ -77,6 +77,12 @@ checkAns = (e) => {
   
   if (correct === false) {
     console.log('wrong')
+    let lives = this.state.lives - 1;
+    this.setState(
+      {
+        lives : lives
+      }
+    )
   }
 }
 
@@ -86,7 +92,7 @@ checkAns = (e) => {
     return (
       <div className="App">
         <h1>{this.state.words}</h1>
-        <Person></Person>
+        <Person lives = {this.state.lives} ></Person>
        
        <div style = {this.flex}>
         {this.generateChars()}
