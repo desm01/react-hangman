@@ -1,4 +1,3 @@
-
 import './App.css';
 import React, { Component} from 'react';
 import Person from './components/person'
@@ -20,14 +19,15 @@ constructor(props) {
   console.log(chars);
 
   for (let i = 0; i < chars.length; i++) {
-    displayedChars.push(' _ ')
+    displayedChars.push('_')
   }
 
   this.state = {
     word : word,
     possibleChars : chars,
     displayedChars : displayedChars,
-    lives : 4
+    lives : 4,
+    playerWon : false
   }
 }
   
@@ -42,7 +42,7 @@ justifyContent : 'center'
 
         return (
 
-          words.map((char, index) => (
+          words.map((char) => (
             
             <Char char = {char}  correct = {false}></Char>
           ))
@@ -84,11 +84,38 @@ checkAns = (e) => {
       }
     )
   }
+
+  if (this.state.displayedChars.includes('_') === false) {
+    console.log('hi')
+    this.setState(
+      {
+        playerWon : true
+      }
+    )
+  }
+
 }
 
 
 
   render() {
+
+    if (this.state.lives > 0) {
+
+      if (this.state.playerWon === true) {
+        return (
+          <div className="App">
+          <h1>{this.state.words}</h1>
+          <Person lives = {this.state.lives} ></Person>
+         
+         <div style = {this.flex}>
+          {this.generateChars()}
+        </div>
+        <h1>YOU HAVE WON</h1>
+          </div>
+        )
+      }
+else if (this.state.playerWon === false) {
     return (
       <div className="App">
         <h1>{this.state.words}</h1>
@@ -100,6 +127,17 @@ checkAns = (e) => {
         <Input checkAnswer = {this.checkAns} ></Input>
       </div>
     );
+
+    }
+  }
+
+    else {
+      return (
+        <div className = "App">
+            <Person lives = {0} ></Person> 
+        </div>
+      )
+    }
 
   }
 
