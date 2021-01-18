@@ -9,14 +9,11 @@ class App extends Component {
 
 constructor(props) {
   super(props);
-
   let randomWords = require('random-words');
   let word = randomWords();
-
+  word = word.toUpperCase();
   let chars = word.split("");
-
   let displayedChars = [];
-  console.log(chars);
 
   for (let i = 0; i < chars.length; i++) {
     displayedChars.push('_')
@@ -29,6 +26,7 @@ constructor(props) {
     lives : 4,
     playerWon : false
   }
+
 }
   
 
@@ -37,68 +35,87 @@ display : 'flex',
 justifyContent : 'center'
   }
 
+
+
+    resetGame = () => window.location.reload(false)
+    
+
     generateChars = () => {
         let words = this.state.displayedChars;
 
         return (
-
           words.map((char) => (
-            
             <Char char = {char}  correct = {false}></Char>
           ))
         );
   }
 
+
+
 checkAns = (e) => {
-  let pressedKey = e.key;
-  console.log(pressedKey);
-  let userAnswer = pressedKey;
-  let possibleAnswers = this.state.possibleChars;
-  console.log(possibleAnswers);
   
-  let correct = false;
 
-  for (let i = 0; i < possibleAnswers.length; i++) {
-    if (possibleAnswers[i] === userAnswer) {
-      console.log('correct')
-      let list = this.state.displayedChars;
-      list[i] = userAnswer;
+  if(e.keyCode >= 65 && e.keyCode <= 122 ) {
+    let pressedKey = e.key;
+    pressedKey = pressedKey.toUpperCase();
 
-      this.setState ({
-        displayedChars : list
-      })
+ 
 
-      console.log(this.state)
-
-      correct = true;
-
+    let userAnswer = pressedKey;
+    let possibleAnswers = this.state.possibleChars;
+    
+    let correct = false;
+  
+    for (let i = 0; i < possibleAnswers.length; i++) {
+      if (possibleAnswers[i] === userAnswer) {
+        console.log('correct')
+        let list = this.state.displayedChars;
+        list[i] = userAnswer;
+  
+        this.setState ({
+          displayedChars : list
+        })
+  
+        console.log(this.state)
+  
+        correct = true;
+  
+      }
+    }
+    
+    if (correct === false) {
+      console.log('wrong')
+      let lives = this.state.lives - 1;
+      this.setState(
+        {
+          lives : lives
+        }
+      )
+    }
+  
+    if (this.state.displayedChars.includes('_') === false) {
+      console.log('hi')
+      this.setState(
+        {
+          playerWon : true
+        }
+      )
     }
   }
-  
-  if (correct === false) {
-    console.log('wrong')
-    let lives = this.state.lives - 1;
-    this.setState(
-      {
-        lives : lives
-      }
-    )
+
+  else {
+
   }
 
-  if (this.state.displayedChars.includes('_') === false) {
-    console.log('hi')
-    this.setState(
-      {
-        playerWon : true
-      }
-    )
-  }
+  
 
 }
 
 
 
   render() {
+
+    console.log(this.state)
 
     if (this.state.lives > 0) {
 
@@ -131,10 +148,12 @@ else if (this.state.playerWon === false) {
     }
   }
 
-    else {
+    else  {
       return (
         <div className = "App">
             <Person lives = {0} ></Person> 
+            <h1>THE CORRECT ANSWER WAS: {this.state.word}</h1>
+            <button onClick={ this.resetGame } >Play Again?</button>
         </div>
       )
     }
