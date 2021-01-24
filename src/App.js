@@ -23,7 +23,7 @@ constructor(props) {
     word : word,
     possibleChars : chars,
     displayedChars : displayedChars,
-    lives : 4,
+    lives : 7,
     playerWon : false
   }
 
@@ -103,9 +103,7 @@ checkAns = (e) => {
     }
   }
 
-  else {
 
-  }
 
   
 

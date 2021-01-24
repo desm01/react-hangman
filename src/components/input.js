@@ -4,7 +4,7 @@ import React from 'react';
 function input (props) {
 return (
     <div>
-        <input onKeyDown= {props.checkAnswer}/>
+        <input value = {''} onKeyDown= {props.checkAnswer}/>
     </div>
 )
 }

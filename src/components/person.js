@@ -4,6 +4,9 @@ import head from '../resources/head.png'
 import legs from '../resources/legs.png'
 import dead from '../resources/dead.png'
 import arms from '../resources/arms.png'
+import oneArm from '../resources/oneArm.png'
+import oneLeg from '../resources/oneLeg.png'
+import body from '../resources/body.png'
 
 const style = {
     height : '200px'
@@ -24,10 +27,22 @@ function person(props) {
     }
 
     if (props.lives === 2) {
-        image = legs;
+        image = oneArm;
     }
 
     if (props.lives === 3) {
+        image = legs;
+    }
+
+    if (props.lives === 4) {
+        image = oneLeg
+    }
+
+    if (props.lives === 5) {
+        image = body;
+    }
+
+    if (props.lives === 6) {
         image = head;
     }
 
